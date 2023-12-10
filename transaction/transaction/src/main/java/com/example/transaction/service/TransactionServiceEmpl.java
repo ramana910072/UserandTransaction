@@ -3,6 +3,7 @@ package com.example.transaction.service;
 import com.example.transaction.dao.TransactionDAO;
 import com.example.transaction.dto.TransactionDTO;
 import com.example.transaction.entity.TransactionEntity;
+import com.example.transaction.exception.ResourceNotFoundException;
 import com.example.transaction.utils.TransactionUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -19,14 +20,24 @@ public class TransactionServiceEmpl implements TransactionService{
     private final TransactionDAO transactionDAO;
     @Override
     public TransactionDTO post(TransactionDTO transactionDTO) {
-        TransactionUtils.validateTransactionDetails(transactionDTO);
-        TransactionEntity transactionEntity = new TransactionEntity();
-        transactionEntity.setId(transactionDTO.getId());
-        transactionEntity.setName(transactionDTO.getName());
-        transactionEntity.setAmount(transactionDTO.getAmount());
-        transactionEntity.setUserId(transactionDTO.getUserId());
-        transactionEntity.setMessage(transactionDTO.getMessage());
-        transactionDAO.save(transactionEntity);
+        try {
+            TransactionUtils.validateTransactionDetails(transactionDTO);
+            if(transactionDAO.existsById(transactionDTO.getId())){
+                throw new ResourceNotFoundException("Already exists this Id");
+            }
+            else {
+                TransactionEntity transactionEntity = new TransactionEntity();
+                transactionEntity.setId(transactionDTO.getId());
+                transactionEntity.setName(transactionDTO.getName());
+                transactionEntity.setAmount(transactionDTO.getAmount());
+                transactionEntity.setUserId(transactionDTO.getUserId());
+                transactionEntity.setMessage(transactionDTO.getMessage());
+                transactionDAO.save(transactionEntity);
+            }
+        }
+        catch (ResourceNotFoundException exception) {
+            throw exception;
+        }
         return transactionDTO;
     }
     @Override

@@ -15,11 +15,4 @@ public class TransactionDTO {
     private Integer userId;
     private String message;
 
-    public TransactionDTO(Integer id, String name, String message, Long amount, Integer userId) {
-        this.id =id;
-        this.name = name;
-        this.message =message;
-        this.amount =amount;
-        this.userId = userId;
-    }
 }

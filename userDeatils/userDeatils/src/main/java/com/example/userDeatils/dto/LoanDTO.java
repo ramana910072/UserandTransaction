@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class LoanDTO {
 
     private Integer id;
-    private String name;
-    private List<TransactionDTO> transactionDTOS;
-    private List<LoanDTO> loanDTOS;
-
-
+    private Integer loanAmount;
+    private Integer loanId;
+    private String reason;
 }

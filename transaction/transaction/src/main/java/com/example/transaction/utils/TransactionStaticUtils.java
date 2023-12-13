@@ -5,9 +5,8 @@ import com.example.transaction.exception.ResourceNotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
 
-@Component
-public class TransactionUtils {
-    public  String validateTransactionDetails(TransactionDTO transactionDTO){
+public class TransactionStaticUtils {
+    public  static String validateTransactionDetails(TransactionDTO transactionDTO){
         if(ObjectUtils.anyNull()){
             throw new ResourceNotFoundException("Transaction Details Null");
         }
